@@ -1,5 +1,7 @@
 module SolucionT1 where
 
+-- NOTA: 10/10 (Todos los ejercicios pasan TODOS los casos de Testing)
+
 -- Ejercicio 1
 mayorSumaPosicionPares :: Integer -> Integer -> Integer
 mayorSumaPosicionPares n m
@@ -37,7 +39,7 @@ hayColumnaSumaCero matriz = aux matriz (cantidadDeColumnas matriz)
 cantidadDeColumnas :: [[Integer]] -> Integer
 cantidadDeColumnas (fila:fs) = longitud fila
 
--- Devuelve la longitud de una lista de de tipo 't'
+-- Devuelve la longitud de una lista de tipo 't'
 longitud :: (Eq t) => [t] -> Integer
 longitud [] = 0
 longitud (_:xs) = 1 + longitud xs
