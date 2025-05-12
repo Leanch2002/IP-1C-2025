@@ -1,0 +1,100 @@
+Enunciado
+
+Resolver los siguientes ejercicios cuyas especificaciones en lenguaje semiformal figuran a continuación. 
+Deben ser implementadas en Haskell utilizando los tipos requeridos y solamente las funciones que se ven
+en la materia Introducción a la Programación / Algoritmos y Estructuras de Datos I (FCEyN-UBA).
+
+# Ejercicio 1 (2 puntos)
+
+problema mayorSumaPosicionPares (n: Z, m: Z ) : Z {
+  requiere: {0 < n}
+  requiere: {0 < m}
+  asegura: {res = n si la suma de sus dígitos en posiciones pares es mayor o igual a la suma de los dígitos de las posiciones pares de m}
+  asegura: {res = m si la suma de sus dígitos en posiciones pares es mayor a la suma de los dígitos de las posiciones pares de n}
+}
+
+Aclaración: Las posiciones de los dígitos de un número se cuentan a partir de 1 y se corresponden con 
+1 para la unidad, 2 para las decenas, 3 para las centenas y así siguiendo. 
+
+Ejemplo: mayorSumaPosicionPares 143 2103 debe devolver 143
+Ya que 4 ≥ (2+0)
+
+# Ejercicio 2 (2 puntos)
+
+Un supermercado lleva registro del stock de mercaderías y le interesa saber cuándo debe reponer mercadería. 
+Representaremos el stock del supermercado con una lista de tuplas compuesta por String x Z x Z, donde:
+
+    La primera componente de la tupla contiene el nombre del producto
+    La segunda componente de la tupla contiene el código del producto
+    La tercera componente de la tupla contiene la cantidad de producto que hay en la actualidad
+
+Se pide implementar productosAReponer, que dado una lista de stock y una cantidad de producto que al menos
+debe haber en el stock actual, devuelva aquellos productos que deben ser respuestos con su nombre y código.
+
+problema productosAReponer (s: seq⟨String x Z x Z⟩,cant: Z) :seq⟨String x Z⟩ {
+  requiere: { s[i]1 es algún producto de los que vende el supermercado para todo i tal que 0 ≤ i < |s|}
+  requiere: { no hay repetidos de producto s[i]1 }
+  requiere: { a cada producto s[i]1 solo le corresponde un único código s[i]2 }
+  requiere: { s[i]2 > 0 para todo i tal que 0 ≤ i < |s|}
+  requiere: { s[i]3 ≥ 0 para todo i tal que 0 ≤ i < |s|}
+  requiere: { cant > 0 }
+  asegura: { res contiene las tuplas de nombre y código de todos los productos incluídos en s tales que s[i]3 < cant }
+  asegura: { res contiene solamente las tuplas de nombre y código de todos los productos incluídos en s tales que s[i]3 < cant }
+}
+
+Ejemplo:  productosAReponer [("Fideos", 112, 20),("SalsaTomate", 203, 15),("Agua", 573, 4)] 5  debe devolver [("Agua", 573)]
+
+# Ejercicio 3 (2 puntos)
+
+En Haskell se puede representar una matriz utilizando una secuencia de secuencias, es decir,
+una secuencia donde cada elemento es a su vez una secuencia de igual longitud, representando las filas de la matriz.
+Por tanto, las columnas están formadas por los elementos en la misma posición de cada una de las filas.
+
+Por ejemplo, en la matriz [[1,2],[3,4],[5,6]], la columna 1 está compuesta por los elementos en la posición 0 de cada fila: (1,3,5).
+
+Se pide implementar la siguiente función:
+
+problema hayColumnaSumaCero (matriz: seq⟨seq⟨Z⟩⟩) : Bool⟩{
+  requiere: {Todos los elementos de la secuencia matriz tienen la misma longitud}
+  requiere: {|matriz| > 0}
+  requiere: {|matriz[0]| > 0}
+  asegura: {res = true <=> existe j tal que 0 ≤ j < |matriz[0]| y la suma de los elementos matriz[i][j] es 0 para todo i con 0 ≤ i < |matriz|}
+}
+
+Aclaración: |matriz| es la longitud de la secuencia (representa la cantidad de filas) y |matriz[0]| es la
+longitud del primer elemento de la secuencia (representa la cantidad de columnas). 
+
+Ejemplo: hayColumnaSumaCero [[1,2],[0,-2]] debe devolver True
+Ya que la columna 1 suma (1+0) y la columna 2 suma(2+(-2)), y, por tanto, existe al menos una columna cuya suma es cero.
+
+# Ejercicio 4 (2,5 puntos)
+
+problema primerosKNumerosAritmeticos (k: Z) : seq⟨Z⟩ {
+  requiere: { k ≥ 1}
+  asegura: { res es la secuencia de los primeros k números aritméticos}
+  asegura: {|res| = k}
+  asegura: {Para cualquier i en el rango 0 ≤ i < k-1, se cumple que res[i] < res[i+1]}
+}
+
+Aclaración: Un número n se llama aritmético si el promedio de todos sus divisores es un número entero.
+Por ejemplo 6 es un número aritmético porque el promedio de todos sus divisores (1+2+3+6)/4 = 3, es un número entero. 
+
+Ejemplo: primerosKNumerosAritmeticos 10  debe devolver [1,3,5,6,7,11,13,14,15,17]
+
+# Ejercicio 5 (0,75 puntos)
+
+Conteste marcando la opción correcta.
+
+¿Cuándo se dice que una especificación está sobre-especificada?
+Cuando se da una precondición más restrictiva de lo realmente necesario, o bien una postcondición más débil de la que se necesita.
+Cuando se da una precondición más débil de lo realmente necesario, o bien una postcondición más restrictiva de la que se necesita.
+Cuando no hay precondiciones (o la precondición es True).
+
+# Ejercicio 6 (0,75 puntos)
+
+Conteste marcando la opción correcta.
+
+¿Cuál de las siguientes afirmaciones es correcta sobre el uso de pattern matching en Haskell?
+Pattern matching en Haskell solo se utiliza con listas y tuplas.
+Pattern matching en Haskell permite seleccionar qué cláusula de una definición de función ejecutar según la forma de los parámetros.
+Pattern matching en Haskell siempre debe manejar todas las posibles combinaciones de patrones, de lo contrario, el compilador lanzará un error.
