@@ -9,6 +9,9 @@ Siendo la última modificación con la solución final:
 from queue import Queue as Cola
 from queue import LifoQueue as Pila
 
+# NOTA: 10/10 (Todos los ejercicios pasan TODOS los casos de Testing)
+
+
 # Ejercicio 1
 def dupla_que_mas_suma(s: list[int]) -> tuple[int,int]:
     i: int = 0
