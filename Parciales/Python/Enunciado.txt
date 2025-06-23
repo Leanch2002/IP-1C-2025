@@ -1,0 +1,128 @@
+Ejercicio 1 [2 puntos]
+
+Implementar la función dupla_que_mas_suma:
+
+problema dupla_que_mas_suma (in s: seq⟨Z⟩) : Z x Z {
+  requiere: { |s|≥ 2 }
+  requiere: { No hay elementos repetidos en s }
+  asegura: { res = (s[i],s[j]) y con s[i] < s[j], para algún i y j, con i ≠ j, tal que 0 ≤ i,j < |s|}
+  asegura: { res[0]+res[1] ≥ s[i]+s[j] para todo i y j, con i ≠ j, tal que 0 ≤ i,j < |s|}
+}
+
+Ejemplo: dupla_que_mas_suma([1,2,3,-10,8,7]) debe devolver (7,8)
+
+Ejercicio 2 [2 puntos]
+
+Un banco recibe a sus clientes y les otorga, a medida que van llegando, una clasificación según si son "prioritarios" o "no_prioritarios". Dicha información se guarda en una Cola de tuplas String x String, donde la primer componente es el nombre del cliente y la segunda componente es la clasificación. Luego un cajero especial atiende a todos aquellos clientes que fueron clasificados como "prioritarios", consevando el orden en que fueron llegando. Se pide implementar la función atencion_con_prioridad, que devuelve una Cola de clientes "prioritarios".
+
+atencion_con_prioridad(inout clientes: Cola⟨ String x String ⟩) : Cola⟨ String x String⟩ {
+  requiere:{ Las primeras componentes de clientes son strings no vacíos y todos distintos entre sí }
+  requiere:{ Las segundas componentes de clientes son strings no vacíos e iguales a "prioritario" o "no_prioritario"}
+  modifica: { clientes }
+  asegura: { Todas las primeras componentes de res aparecen en alguna primera componente de clientes@pre cuya segunda componente es igual a "prioritario"}
+  asegura: { Todas las primeras componentes de clientes aparecen en alguna primera componente de clientes@pre cuya segunda componente es igual a "no_prioritario"}
+  asegura: { |res| + |clientes| = |clientes@pre|}
+  asegura: { Para todo cliente c1 y cliente c2 que son "prioritario" pertenecientes a clientes@pre, si c1 aparece antes que c2 en clientes@pre entonces c1 aparece antes que c2 en res}
+  asegura: { Para todo cliente c1 y cliente c2 que son "no_prioritario" pertenecientes a clientes@pre, si c1 aparece antes que c2 en clientes@pre entonces c1 aparece antes que c2 en clientes}
+}
+
+Ejemplo: atencion_con_prioridad(c), donde c es una cola en la cual se insertaron (en orden)
+ 
+los siguientes elementos:
+
+
+      
+    ("Laura", "no_prioritario"]
+
+      
+    ("Juan", "no_prioritario")
+
+      
+    ("Pablo", "prioritario")
+
+      
+    ("Amalia", "no_prioritario")
+
+      
+    ("Oscar", "prioritario")
+      
+
+
+Debe devolver:
+
+
+      
+    ("Pablo", "prioritario")
+
+      
+    ("Oscar", "prioritario")
+      
+
+
+Y modificar la cola clientes para que ya no aparezcan ahí.
+
+3) Ejercicio 3 [2.5 puntos]
+
+Implementar la función espejar_vertical:
+
+problema espejar_vertical(inout A: seq⟨seq⟨Z⟩⟩) {
+  requiere: { Todas las filas de A tienen la misma longitud (estrictamente positiva)}
+  requiere: { |A| > 0}
+  modifica: { A }
+  asegura: { A tiene exactamente las mismas dimensiones que A@pre }
+  asegura: { A[i][j] = A@pre[i][j] para todo i tal que 0 ≤ i < |A|
+y para todo j tal que 0 ≤ j < (|A[0]|-|A[0]| div 2) }
+  asegura: { A[i][j] = A@pre[i][|A[0]|-1-j] para todo i tal que 0 ≤ i < |A|
+y para todo j tal que (|A[0]|-|A[0]| div 2) ≤ j < |A[0]|}
+}
+
+
+Ejemplo: Si A = [[1,2,3],[4,5,6]], luego de ejecutarse espejar_vertical(A) 
+
+ debería ocurrir que print(A) muestre [[1,2,1], [4,5,4]]
+  
+
+Ejercicio 4 [2 puntos]
+
+En cada cuatrimestre se almacena en un diccionario las notas de todos los alumnos, de tal forma que las claves del diccionario son los nombres de los alummnos que cursaron ese cuatrimestre, y sus valores son la nota final que obtuvieron. Se desea saber cuántos alumnos que tuvieron que recursar, porque no aprobaron en el primer cuatrimestre, finalmente aprobaron en el segundo cuatrimestre. La nota para aprobar la materia es 7 o superior, y la materia se puntúa de 0 a 10.
+
+problema recursantesAprobados (in cuat1: Diccionario⟨String,Z⟩, in cuat2: Diccionario⟨String,Z⟩): Z {
+  requiere: { Cada diccionario de cuatrimestre tiene como valores posibles la nota de 0 a 10}
+  requiere: { Si existe una clave que está en cuat1 y cuat2 entonces el valor en cuat1 es menor a 7}
+  asegura: { res es la cantidad de claves que están cuat1 y cuat2, para cuyo valor en cuat2 es mayor o igual a 7}
+}
+
+
+Ejemplo: recursantesAprobados({'Juan': 10, 'Ana': 6, 'Pablo': 5},
+
+  {'Lina': 9, 'Sol': 10, 'Pedro': 7,'Ana': 9}) debe devolver 1.
+  
+
+Ejercicio 5 [0.75 puntos]
+
+Dada la siguiente especificación y una posible implementación de la misma, conteste marcando la opción correcta.
+
+problema duplicar_o_sumar_uno (in n: Z): Z {
+  requiere: { - }
+  asegura: { Si n > 0, res = 2*n}
+  asegura: { Si n = 0, res = n}
+  asegura: { Si n < 0, res = n+1}
+}
+def duplicar_o_sumar_uno(n: int) -> int:
+   res: int = n
+   if n > 0:
+        res = 2 * n
+   else:
+        res += 1
+   return res
+
+El código es correcto, calcula lo pedido en la especificación para cualquier input
+El código tiene un bug, y si hacemos un test suite que cubra todas las líneas lo detectaremos
+El código tiene un bug, pero es posible hacer un test suite que cubra todas las líneas y no detectar dicho bug
+Ejercicio 6 [0.75 puntos]
+
+Seleccione la opción correcta.
+
+Se tiene un programa p que recibe una secuencia como parámetro, entonces p([0,1,2,3]) ejecutará igual cantidad de operaciones que p([3,2,1,0]).
+Si tengo 2 programas y los ejecuto con los mismos parámetros, el programa que tiene mayor cantidad de líneas de código ejecutará más operaciones que el que tiene menos líneas de código.
+No es posible afirmar ninguna de las opciones anteriores sin conocer el código de la/las función/funciones. 
